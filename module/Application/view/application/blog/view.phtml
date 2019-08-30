@@ -1,0 +1,20 @@
+<?php
+$this->headTitle('View Blog - ' . $blog->getTitle());
+
+$this->mainMenu()->setActiveItemId('home');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home')
+            ]);
+        
+?>
+
+<a href="
+    <?= $this->url('application', ['action'=>'index']); ?>">
+    &lt;&lt; Retornar
+</a>
+
+<h1>
+    <?= $this->escapeHtml($blog->getTitle()); ?>
+</h1>
+

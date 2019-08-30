@@ -1,0 +1,51 @@
+<?php
+$this->headTitle('Manage Blogs');
+
+$this->mainMenu()->setActiveItemId('admin-blogs');
+
+$this->pageBreadcrumbs()->setItems([
+            'Admin'=>$this->url('home')
+            ]);
+?>
+
+<h1>Configurar Blogs</h1>
+
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('blogs', ['action'=>'add']); ?>">
+   Novo blog
+</a>
+</p>
+
+<table class="table table-striped">
+
+   <tr>
+        <th>ID</th>
+        <th>Titulo do Blog</th>
+        <th>Ações</th>        
+    </tr>
+    
+    <?php foreach ($blogs as $blog): ?>
+    
+    <tr>
+        <td><?= $this->escapeHtml($blog->getId()); ?></td>
+        <td>
+            <a href="<?= $this->url('blogs', ['action'=>'view', 'id'=>$blog->getId()]); ?>">
+                <?= $this->escapeHtml($blog->getTitle()); ?>
+            </a> 
+        </td>
+        <td>
+            <a class="btn btn-info" href="<?= $this->url('blogs', 
+                    ['action'=>'edit', 'id'=>$blog->getId()]); ?>">
+                <span class="glyphicon glyphicon-pencil" ></span> Edit
+            </a>
+            <a class="btn btn-danger" href="<?= $this->url('blogs',
+                    ['action'=>'delete', 'id'=>$blog->getId()]); ?>">
+                <span class="glyphicon glyphicon-remove"></span> Delete
+            </a>
+        </td>    
+    </tr>
+        
+    <?php endforeach; ?>   
+    
+</table>

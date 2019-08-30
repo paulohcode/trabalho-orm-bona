@@ -1,0 +1,41 @@
+<?php
+$this->headTitle('New Blog');
+
+$this->mainMenu()->setActiveItemId('home');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home'),
+            'Add Blog'=>$this->url('blogs', ['action'=>'add'])
+            ]);
+
+$form = $this->form;
+$form->get('title')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'Enter blog title here'
+    ]);
+$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
+$form->prepare();
+
+?>
+
+<h1>Add New Blog</h1>
+
+<p>
+    Please fill out the following form and click the <i>Create</i> button.
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form); ?>
+        
+        <div class="form-group">
+            <?= $this->formLabel($form->get('title')); ?>
+            <?= $this->formElement($form->get('title')); ?>
+            <?= $this->formElementErrors($form->get('title')); ?>                  
+        </div>
+        
+        <?= $this->formElement($form->get('submit')); ?>
+        
+        <?= $this->form()->closeTag(); ?>
+    </div>    
+</div>   

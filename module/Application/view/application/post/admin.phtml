@@ -1,0 +1,65 @@
+<?php
+$this->headTitle('Manage Posts');
+
+$this->mainMenu()->setActiveItemId('admin-posts');
+
+$this->pageBreadcrumbs()->setItems([
+            'Admin'=>$this->url('home')
+            ]);
+?>
+
+<h1>Configurar Post</h1>
+
+<p>
+<a class="btn btn-default" href="
+    <?= $this->url('posts', ['action'=>'add']); ?>">
+    Novo Post
+</a>
+</p>
+
+<table class="table table-striped">
+
+   <tr>
+        <th>ID</th>
+        <th>Titulo</th>
+        <th>Data de Criação</th>
+        <th>Blog</th>        
+        <th>Status</th>        
+        <th>Ação</th>        
+    </tr>
+    
+    <?php foreach ($posts as $post): ?>
+    
+    <tr>
+        <td><?= $this->escapeHtml($post->getId()); ?></td>
+        <td>
+            <a href="<?= $this->url('view_post', [
+                'action'=>'view', 
+                'id'=>$post->getId(),
+                'blog_id' => $post->getBlog()->getId()
+            ]); ?>">
+                <?= $this->escapeHtml($post->getTitle()); ?>
+            </a> 
+        </td>
+        <td><?= $this->escapeHtml($post->getDateCreated()->format('d/m/Y H:i')); ?></td>
+        <td>
+            <a href="<?= $this->url('blogs', ['action'=>'view', 'id'=>$post->getBlog()->getId()]); ?>">
+                <?= $this->escapeHtml($post->getBlog()->getTitle()); ?>
+            </a> 
+        </td>
+        <td><?= $this->escapeHtml($postManager->getPostStatusAsString($post)); ?></td>
+        <td>
+            <a class="btn btn-info" href="<?= $this->url('posts', 
+                    ['action'=>'edit', 'id'=>$post->getId()]); ?>">
+                <span class="glyphicon glyphicon-pencil" ></span> Edit
+            </a>
+            <a class="btn btn-danger" href="<?= $this->url('posts',
+                    ['action'=>'delete', 'id'=>$post->getId()]); ?>">
+                <span class="glyphicon glyphicon-remove"></span> Delete
+            </a>
+        </td>    
+    </tr>
+        
+    <?php endforeach; ?>   
+    
+</table>

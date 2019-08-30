@@ -1,0 +1,128 @@
+<?php
+$this->headTitle('Posts');
+
+$this->mainMenu()->setActiveItemId('home');
+
+$this->pageBreadcrumbs()->setItems([
+            'Home'=>$this->url('home')
+            ]);
+?>
+
+<h1>Posts</h1>
+
+<div class="row">
+    
+    <div class="col-md-4">
+
+    <h4>Leia nossas últimas postagens:</h4>
+    <?php foreach($postsOrderCreated as $post): /* @var $post Application\Entity\Post */ ?>
+
+    <h3>
+        <a href="<?= $this->url('view_post', [
+            'action'=>'view', 
+            'id'=>$post->getId(),
+            'blog_id' => $post->getBlog()->getId()
+        ]); ?>">
+            <?= $this->escapeHtml($post->getTitleWithBlog()); ?>
+        </a>    
+    </h3>
+    
+    <p>
+        Publicado: <?= $this->escapeHtml($post->getDateCreated()->format('d/m/Y H:i')); ?>
+        | Tags: <?= $this->escapeHtml($postManager->convertTagsToString($post)); ?>   
+    </p>    
+        
+    <p class="comments-header">
+        <?= $this->escapeHtml($postManager->getCommentCountStr($post)); ?> | 
+        <a href="<?= $this->url('view_post', [
+            'action' => 'view', 
+            'id' => $post->getId(),
+            'blog_id' => $post->getBlog()->getId()
+        ],
+                ['fragment'=>'comment']); ?>">
+            Add novo comentário
+        </a>
+    </p>
+
+    <p>    
+        <?= $this->escapeHtml($post->getContent()); ?>
+    </p>
+
+    <?php endforeach; ?>
+
+    <?= $this->paginationControl($postsOrderCreated,
+                    'Sliding',
+                    'application/partial/paginator', 
+                    array('route' => 'application')); ?>
+    
+    </div>
+
+    <div class="col-md-4">
+        <h4>Confira nossos posts mais vistos:</h4>
+
+        <?php foreach($postsOrderViews as $post): /* @var $post Application\Entity\Post */ ?>
+
+            <h3>
+                <a href="<?= $this->url('view_post', [
+                    'action' => 'view', 
+                    'id' => $post->getId(),
+                    'blog_id' => $post->getBlog()->getId()
+                ]); ?>">
+                    <?= $this->escapeHtml($post->getTitleWithBlog()); ?>
+                </a>
+            </h3>
+
+            <p>
+                Publicado: <?= $this->escapeHtml($post->getDateCreated()->format('d/m/Y H:i')); ?>
+                | Tags: <?= $this->escapeHtml($postManager->convertTagsToString($post)); ?>
+            </p>
+
+            <p class="comments-header">
+                <?= $this->escapeHtml($postManager->getCommentCountStr($post)); ?> |
+                <a href="<?= $this->url('view_post', [
+                    'action' => 'view', 
+                    'id' => $post->getId(),
+                    'blog_id' => $post->getBlog()->getId()],
+                    ['fragment'=>'comment']); ?>">
+                    Add novo comentário
+                </a>
+            </p>
+
+            <p>
+                <?= $this->escapeHtml($post->getContent()); ?>
+            </p>
+
+        <?php endforeach; ?>
+
+        <?= $this->paginationControl($postsOrderViews,
+            'Sliding',
+            'application/partial/paginator',
+            array('route' => 'application')); ?>
+
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Popular Tags</h3>
+            </div>
+            <div class="panel-body">
+                <?php foreach($this->tagCloud as $tagName=>$frequency): ?>
+                
+                <a href="<?= $this->url('application', ['action'=>'index'],
+                    ['query'=>['tag'=>$tagName]]); ?>">                   
+        
+                    <span style="font-size:<?= $this->escapeHtml(0.9+$frequency*3) ?>em">
+                        <?= $this->escapeHtml($tagName); ?>
+                    </span>
+                
+                </a>    
+                    
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+
