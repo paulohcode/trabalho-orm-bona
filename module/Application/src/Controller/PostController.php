@@ -59,8 +59,7 @@ class PostController extends AbstractActionController
             
             // Fill form with data.
             $form->setData($data);
-            if ($form->isValid()) {
-                                
+            if ($form->isValid()) {                                 
                 // Get validated form data.
                 $data = $form->getData();
                 
