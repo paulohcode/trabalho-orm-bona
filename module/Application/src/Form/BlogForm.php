@@ -31,8 +31,7 @@ class BlogForm extends Form
      * This method adds elements to form (input fields and submit button).
      */
     protected function addElements() 
-    {
-                
+    {                
         // Add "title" field
         $this->add([        
             'type'  => 'text',
@@ -43,8 +42,7 @@ class BlogForm extends Form
             'options' => [
                 'label' => 'Title',
             ],
-        ]);
-        
+        ]);        
         // Add the submit button
         $this->add([
             'type'  => 'submit',
